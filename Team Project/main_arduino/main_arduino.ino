@@ -14,13 +14,14 @@ const int myBuzzer = 9;
 const int subArduino = 7;
 
 void setup() {
-  putMode(mySoundSensor, INPUT);
+  pinMode(mySoundSensor, INPUT);
   Serial.begin(9600);
 }
 
 void loop() {
   int readSound = analogRead(A0);
-
+  Serial.println(readSound);
+  
   if(readSound > LOUD_SOUND)
   {
     digitalWrite(subArduino,HIGH);
