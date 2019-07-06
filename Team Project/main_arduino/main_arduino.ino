@@ -24,14 +24,13 @@ const int subArduino = 7;
 #include <avr/power.h> // Required for 16 MHz Adafruit Trinket
 #endif
 
-#define LED_PIN  6 // On Trinket or Gemma, suggest changing this to 1
-#define LED_COUNT 4 // LED 갯수
-#define BRIGHTNESS 255
-
+const int LED_PIN  6 // On Trinket or Gemma, suggest changing this to 1
+const int LED_COUNT 4 // LED 갯수
+const int BRIGHTNESS 255
+const int delayVAL 500 
 Adafruit_NeoPixel pixels(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
-#define delayVAL 500 
 
-
+///////////////////////////////////////////////////////////////////////////////////
 void setup() {
   pinMode(mySoundSensor, INPUT);
 //  Serial.begin(9600);
@@ -44,7 +43,6 @@ void setup() {
   // END of Trinket-specific code.
   pixels.setBrightness(BRIGHTNESS);
   pixels.begin(); // INITIALIZE NeoPixel strip object (REQUIRED)
-
 }
 
 void loop() {
