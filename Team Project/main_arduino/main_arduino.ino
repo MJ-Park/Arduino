@@ -7,8 +7,9 @@
  */
 
 #include "pitches.h"
-#include <SoftwareSerial.h>
 
+// BLUETOOTH defines
+#include <SoftwareSerial.h>
 SoftwareSerial mySerial(2,3); // 블루투스의 Tx, Rx핀을 2,3번핀으로 설정
 
 // SOUND defines
