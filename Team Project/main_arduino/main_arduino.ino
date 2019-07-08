@@ -10,7 +10,7 @@
 
 // BLUETOOTH defines
 #include <SoftwareSerial.h>
-SoftwareSerial mySerial(3,2); // 블루투스의 Tx, Rx핀을 2,3번핀으로 설정
+SoftwareSerial mySerial(3,4);
 
 // SOUND defines
 const int LOUD_SOUND = 650;
