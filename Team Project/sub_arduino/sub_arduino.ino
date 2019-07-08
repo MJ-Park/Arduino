@@ -8,25 +8,24 @@
 
 // BLUETOOTH defines
 #include <SoftwareSerial.h>
-SoftwareSerial mySerial(2,3); // 블루투스의 Tx, Rx핀을 2,3번핀으로 설정
-
-
-//const int mainArduino = 7;
+SoftwareSerial mySerial(3,2); // 블루투스의 Tx, Rx핀을 2,3번핀으로 설정
 
 // MOTOR defines
+#include <Stepper.h>
 const int STEPS = 2048;
 Stepper myStepper(STEPS, 11, 9, 10, 8);
-//const int LOUD_SOUND = 640;
 
 void setup() {
   myStepper.setSpeed(2);
+  mySerial.begin(9600);
   Serial.begin(9600);
 }
 
 void loop() {
   if(mySerial.available()) {
-    myStepper.step(STEPS*5);
-    delay(300);
+    Serial.write(mySerial.read());
+//    myStepper.step(STEPS);
+//    delay(100);
   }
 } 
 

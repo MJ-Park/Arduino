@@ -1,6 +1,6 @@
 /*
  * Main Arduino
- * Version 20190703
+ * Version 20190708
  * Read sound data every 0.1 sec
  * If sound is larger than LOUD_SOUND,
  * buzzer_melody, led_blink
@@ -10,10 +10,10 @@
 
 // BLUETOOTH defines
 #include <SoftwareSerial.h>
-SoftwareSerial mySerial(2,3); // 블루투스의 Tx, Rx핀을 2,3번핀으로 설정
+SoftwareSerial mySerial(3,2); // 블루투스의 Tx, Rx핀을 2,3번핀으로 설정
 
 // SOUND defines
-const int LOUD_SOUND = 640;
+const int LOUD_SOUND = 650;
 const int mySoundSensor = A0;
 const int myBuzzer = 9;
 const int subArduino = 7;
@@ -24,11 +24,18 @@ const int subArduino = 7;
 #include <avr/power.h> // Required for 16 MHz Adafruit Trinket
 #endif
 
-const int LED_PIN = 6; // On Trinket or Gemma, suggest changing this to 1
-const int LED_COUNT = 4; // LED 갯수
-const int BRIGHTNESS = 255;
-const int delayVAL = 500;
-Adafruit_NeoPixel pixels(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
+const int LED_PIN1 = 3;
+const int LED_PIN2 = 5;
+const int LED_PIN3 = 6;
+
+const int LED_COUNT1 = 2;
+const int LED_COUNT2 = 1;
+const int LED_COUNT3 = 1;// LED 갯수
+const int BRIGHTNESS = 170;
+const int delayVAL = 1000;
+Adafruit_NeoPixel pixels1(LED_COUNT1, LED_PIN1, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel pixels2(LED_COUNT2, LED_PIN2, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel pixels3(LED_COUNT3, LED_PIN3, NEO_GRB + NEO_KHZ800);
 
 ///////////////////////////////////////////////////////////////////////////////////
 void setup() {
@@ -41,8 +48,13 @@ void setup() {
   clock_prescale_set(clock_div_1);
   #endif
   // END of Trinket-specific code.
-  pixels.setBrightness(BRIGHTNESS);
-  pixels.begin(); // INITIALIZE NeoPixel strip object (REQUIRED)
+  pixels1.setBrightness(BRIGHTNESS);
+  pixels2.setBrightness(BRIGHTNESS);
+  pixels3.setBrightness(BRIGHTNESS);
+  pixels1.begin(); 
+  pixels2.begin(); 
+  pixels3.begin(); 
+
 }
 
 void loop() {
@@ -52,44 +64,62 @@ void loop() {
   if(readSound > LOUD_SOUND)
   {
     mySerial.write(readSound);
+    delay(100);
+    mySerial.write(readSound);
+    delay(100);
     
     led_blink();
     buzzer_melody();
+    pixels1.clear();
+    pixels2.clear();
+    pixels3.clear();
+    pixels1.show();
+    pixels2.show();
+    pixels3.show();
   }
 
-  delay(50);
+  delay(100);
 }
 
 void led_blink()
 {
-  pixels.clear();
+  pixels1.setPixelColor(0, pixels1.Color(255, 255, 255));
+  pixels1.setPixelColor(1, pixels1.Color(255, 0, 0));
+  pixels2.setPixelColor(0, pixels2.Color(255, 200, 0));
+  pixels3.setPixelColor(0, pixels3.Color(255, 178, 217));
+  
+  pixels1.show();
+  pixels2.show();
+  pixels3.show();//설정 값 출력
+  delay(delayVAL);
+  
+  
 
-  pixels.setPixelColor(1, pixels.Color(150, 0, 0));
-  pixels.setPixelColor(2, pixels.Color(150, 0, 0));
-  pixels.setPixelColor(3, pixels.Color(150, 150, 0));
-  pixels.setPixelColor(4, pixels.Color(150, 150, 150));
-
-  pixels.show();  // Send the updated pixel colors to the hardware.
-
-  delay(delayVAL); // Pause before next pass through loop
 }
 
 void buzzer_melody()
 {
-    int melody[] = {
-    NOTE_C4, NOTE_G3, NOTE_G3, NOTE_A3, NOTE_G3, 0, NOTE_B3, NOTE_C4
+    int melody[] = { 
+    NOTE_FS3, NOTE_A3, NOTE_A3, NOTE_A3,NOTE_A3, NOTE_FS3, NOTE_A3,       NOTE_FS3, NOTE_A3, NOTE_A3, NOTE_A3,NOTE_A3, NOTE_B3, NOTE_A3,
+    NOTE_D4, NOTE_D4, NOTE_D4, 0, NOTE_D4, NOTE_D4, NOTE_D4,0,    NOTE_D4, NOTE_B3, NOTE_B3, NOTE_B3,NOTE_B3, NOTE_A3, NOTE_B3,
+    NOTE_G3, NOTE_G3, NOTE_A3, NOTE_A3,NOTE_B3, NOTE_B3, NOTE_CS4, NOTE_D4,      NOTE_D4, NOTE_AS3, NOTE_AS3, NOTE_AS3,0,
+    NOTE_FS4, NOTE_FS4, NOTE_FS4, NOTE_FS4, NOTE_FS4, NOTE_D4, NOTE_FS4,       NOTE_E4, 0,0
   };
 
     int noteDurations[] = {
-    4, 8, 8, 4, 4, 4, 4, 4
+    8,8,8,8,8,8,4,    8,8,8,8,8,8,4, //14
+    8,8,8,8,8,8,8,8,  8,8,8,8,8,8,4,//15
+    8,8,8,8,8,8,8,8,  8,4,8,4,4,  //13
+    8,8,8,8,8,8,4,   4,4,2  //10
+    
   };
 
-    for (int thisNote = 0; thisNote < 8; thisNote++) {
+    for (int thisNote = 0; thisNote < 53; thisNote++) {
 
     int noteDuration = 1000 / noteDurations[thisNote];
     tone(myBuzzer, melody[thisNote], noteDuration);
 
-    int pauseBetweenNotes = noteDuration * 1.30;
+    int pauseBetweenNotes = noteDuration * 1.60;
     delay(pauseBetweenNotes);
     noTone(myBuzzer);
   }
