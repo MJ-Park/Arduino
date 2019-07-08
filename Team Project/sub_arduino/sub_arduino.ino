@@ -16,7 +16,7 @@ const int STEPS = 2048;
 Stepper myStepper(STEPS, 11, 9, 10, 8);
 
 void setup() {
-  myStepper.setSpeed(1);
+  myStepper.setSpeed(4);
   mySerial.begin(9600);
   Serial.begin(9600);
 }
@@ -24,30 +24,18 @@ void setup() {
 void loop() {
   if(mySerial.available()) {
     Serial.write(mySerial.read());
-    myStepper.step(180);
+    myStepper.step((STEPS/2));
     delay(50);
-    myStepper.step(-180);
+    myStepper.step(-(STEPS/2));
     delay(50);
-    myStepper.step(180);
+    myStepper.step((STEPS/2)-100);
     delay(50);
-    myStepper.step(-180);
+    myStepper.step(-(STEPS/2)+100);
     delay(50);
-    myStepper.step(100);
-    delay(50);
-    myStepper.step(-100);
-    delay(50);
-//    myStepper.step(STEPS/4);
-//    delay(100);
+//    myStepper.step((STEPS/4));
+//    delay(50);
 //    myStepper.step(-(STEPS/4));
-//    delay(100);
-//    myStepper.step(STEPS/4);
-//    delay(100);
-//    myStepper.step(-(STEPS/4));
-//    delay(100);
-//    myStepper.step(STEPS/4);
-//    delay(100);
-//    myStepper.step(-(STEPS/4));
-//    delay(100);
+//    delay(50);
   }
 } 
 

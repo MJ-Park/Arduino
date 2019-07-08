@@ -86,10 +86,10 @@ void loop() {
 
 void led_blink()
 {
-  pixels1.setPixelColor(0, pixels1.Color(255, 255, 255));
-  pixels1.setPixelColor(1, pixels1.Color(255, 0, 0));
-  pixels2.setPixelColor(0, pixels2.Color(255, 200, 0));
-  pixels3.setPixelColor(0, pixels3.Color(255, 178, 217));
+  pixels1.setPixelColor(0, pixels1.Color(125, 255, 255));
+  pixels1.setPixelColor(1, pixels1.Color(125, 0, 0));
+  pixels2.setPixelColor(0, pixels2.Color(125, 200, 0));
+  pixels3.setPixelColor(0, pixels3.Color(125, 178, 217));
   
   pixels2.show();
   pixels3.show();
