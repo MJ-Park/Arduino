@@ -24,8 +24,30 @@ void setup() {
 void loop() {
   if(mySerial.available()) {
     Serial.write(mySerial.read());
-    myStepper.step(STEPS);
-    delay(100);
+    myStepper.step(180);
+    delay(50);
+    myStepper.step(-180);
+    delay(50);
+    myStepper.step(180);
+    delay(50);
+    myStepper.step(-180);
+    delay(50);
+    myStepper.step(100);
+    delay(50);
+    myStepper.step(-100);
+    delay(50);
+//    myStepper.step(STEPS/4);
+//    delay(100);
+//    myStepper.step(-(STEPS/4));
+//    delay(100);
+//    myStepper.step(STEPS/4);
+//    delay(100);
+//    myStepper.step(-(STEPS/4));
+//    delay(100);
+//    myStepper.step(STEPS/4);
+//    delay(100);
+//    myStepper.step(-(STEPS/4));
+//    delay(100);
   }
 } 
 
