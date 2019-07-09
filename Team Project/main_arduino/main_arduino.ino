@@ -13,7 +13,7 @@
 SoftwareSerial mySerial(3,4);
 
 // SOUND defines
-const int LOUD_SOUND = 635;
+const int LOUD_SOUND = 615;
 const int mySoundSensor = A0;
 const int myBuzzer = 9;
 const int subArduino = 7;
